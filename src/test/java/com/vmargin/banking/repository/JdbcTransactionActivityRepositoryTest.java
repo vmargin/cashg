@@ -115,6 +115,33 @@ class JdbcTransactionActivityRepositoryTest {
     }
 
     @Test
+    void sameOwnerTransferReceiptsUseTheRequestedLedgerRowId() throws Exception {
+        BankAccount savings = new JdbcAccountRepository().create(owner.getId(), owner.getFullName(),
+            "Audit PHP Savings", "SAVINGS", "PHP", BigDecimal.ZERO);
+        new JdbcCashInRepository().cashInAccount(owner.getId(), owner.getBankAccount().getId(),
+            new BigDecimal("10.00"), "Seed same-owner transfer", LocalDateTime.now(), UUID.randomUUID().toString());
+        String ownTransferReference = UUID.randomUUID().toString();
+        new JdbcTransferRepository().transferToAccount(owner.getId(), owner.getBankAccount().getId(),
+            savings.getAccountNumber(), new BigDecimal("10.00"), LocalDateTime.now(), ownTransferReference);
+        List<Transaction> pair = transactions.findByUserId(owner.getId()).stream()
+            .filter(transaction -> ownTransferReference.equals(transaction.getReference())).toList();
+        Transaction sent = pair.stream().filter(transaction -> transaction.getType() == TransactionType.TRANSFER_SENT)
+            .findFirst().orElseThrow();
+        Transaction received = pair.stream()
+            .filter(transaction -> transaction.getType() == TransactionType.TRANSFER_RECEIVED)
+            .findFirst().orElseThrow();
+
+        assertEquals(TransactionType.TRANSFER_SENT,
+            transactions.findReceiptById(owner.getId(), sent.getId()).orElseThrow().getType());
+        assertEquals(TransactionType.TRANSFER_RECEIVED,
+            transactions.findReceiptById(owner.getId(), received.getId()).orElseThrow().getType());
+        assertEquals(TransactionType.TRANSFER_SENT,
+            transactions.findReceipt(owner.getId(), ownTransferReference).orElseThrow().getType());
+        assertFalse(transactions.findReceiptById(other.getId(), sent.getId()).isPresent());
+        assertFalse(transactions.findReceiptById(other.getId(), received.getId()).isPresent());
+    }
+
+    @Test
     void notificationReadStatePersistsAndIsScopedToTheOwningAccount() throws Exception {
         long ownerTransactionId = transactions.findByUserId(owner.getId()).getFirst().getId();
         long otherTransactionId = transactions.findByUserId(other.getId()).getFirst().getId();

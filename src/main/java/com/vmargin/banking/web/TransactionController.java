@@ -67,12 +67,21 @@ public class TransactionController {
 
     @GetMapping("/transactions/receipt/{reference}")
     public Object transactionReceipt(@PathVariable String reference, HttpSession session, Model model) {
+        return renderReceipt(session, model, user -> historyService.getReceipt(user, reference));
+    }
+
+    @GetMapping("/transactions/receipt/entry/{transactionId}")
+    public Object transactionReceiptEntry(@PathVariable long transactionId, HttpSession session, Model model) {
+        return renderReceipt(session, model, user -> historyService.getReceiptById(user, transactionId));
+    }
+
+    private Object renderReceipt(HttpSession session, Model model, ReceiptLookup lookup) {
         try {
             User user = accounts.current(session);
             if (user == null) {
                 return "redirect:/login";
             }
-            Optional<Transaction> receipt = historyService.getReceipt(user, reference);
+            Optional<Transaction> receipt = lookup.find(user);
             if (receipt.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
@@ -83,6 +92,11 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body("Receipt details are temporarily unavailable.");
         }
+    }
+
+    @FunctionalInterface
+    private interface ReceiptLookup {
+        Optional<Transaction> find(User user) throws SQLException;
     }
 
     @GetMapping("/statement.csv")

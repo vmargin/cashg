@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script src="/js/theme.js"></script>
+  <script src="/js/ui.js" defer></script>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071321"><meta name="description" content="Review a local Cash - G cash-in before confirming it.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/css/app.css">
+  <title>Review cash-in | Cash - G</title>
+</head>
+<body class="app-body">
+  <a class="skip-link" href="#main-content">Skip to cash-in review</a>
+  <div class="app-shell">
+    <aside th:replace="~{fragments/account-rail :: accountRail('cash-in')}"></aside>
+    <div class="app-frame">
+      <header th:replace="~{fragments/account-rail :: topbar(${user})}"></header>
+      <main id="main-content" class="page-content review-page">
+        <section class="panel review-panel" aria-labelledby="cash-in-review-title">
+          <p class="eyebrow">LOCAL LEDGER · REVIEW · EXPIRES IN FIVE MINUTES</p>
+          <h1 id="cash-in-review-title">Review cash-in</h1>
+          <p>Confirming records these synthetic funds in your practice ledger. No bank or cash-in provider is contacted.</p>
+          <dl class="review-details">
+            <div><dt>Destination account</dt><dd th:text="${pendingCashIn.accountName + ' · PHP'}">Everyday account · PHP</dd></div>
+            <div><dt>Amount to record</dt><dd th:text="${'₱' + #numbers.formatDecimal(pendingCashIn.amount, 1, 'COMMA', 2, 'POINT')}">₱0.00</dd></div>
+            <div><dt>Description</dt><dd th:text="${pendingCashIn.details}">Practice cash-in</dd></div>
+          </dl>
+          <form method="post" th:action="@{/cash-in/confirm}" class="form-stack">
+            <input type="hidden" name="token" th:value="${operationToken}">
+            <button class="button button-primary button-wide" type="submit">Confirm cash-in</button>
+          </form>
+          <form method="post" th:action="@{/cash-in/cancel}" class="review-cancel-form">
+            <input type="hidden" name="token" th:value="${operationToken}">
+            <button class="button button-quiet button-wide" type="submit">Cancel and return</button>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+  <nav th:replace="~{fragments/account-rail :: mobileNav('cash-in')}"></nav>
+</body>
+</html>

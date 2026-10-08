@@ -14,6 +14,7 @@ import com.vmargin.banking.util.JdbcSchemaMigrator;
 import com.vmargin.banking.util.PinHasher;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Clock;
 import java.time.Instant;
@@ -130,6 +131,27 @@ class CoreMoneyIntegrationTest {
         assertEquals(reference, ledger.findByUserId(alex.getId()).getFirst().getReference());
         assertEquals(reference, ledger.findByUserId(sam.getId()).getFirst().getReference());
         assertEquals(3, count("transactions"));
+    }
+
+    @Test
+    void cashInRejectsAnInactiveOwnedAccountWithoutWritingLedgerOrBalance() throws Exception {
+        BankAccount savings = new JdbcAccountRepository().create(alex.getId(), alex.getFullName(),
+            "Audit PHP Savings", "SAVINGS", "PHP", BigDecimal.ZERO);
+        try (Connection connection = DatabaseConnection.open();
+             PreparedStatement statement = connection.prepareStatement(
+                 "UPDATE accounts SET status = 'FROZEN' WHERE id = ?")) {
+            statement.setLong(1, savings.getId());
+            assertEquals(1, statement.executeUpdate());
+        }
+        BigDecimal balanceBefore = balance(alex);
+        long transactionsBefore = count("transactions");
+
+        assertThrows(IllegalArgumentException.class, () -> new CashInService(new JdbcCashInRepository())
+            .cashIn(alex, savings.getId(), new BigDecimal("1.00"), "Inactive-account attempt",
+                UUID.randomUUID().toString()));
+
+        assertEquals(balanceBefore, balance(alex));
+        assertEquals(transactionsBefore, count("transactions"));
     }
 
     @Test

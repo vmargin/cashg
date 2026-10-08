@@ -85,6 +85,14 @@ public class TransactionHistoryService {
         return repository.findReceipt(user.getId(), reference);
     }
 
+    public Optional<Transaction> getReceiptById(User user, long transactionId) throws SQLException {
+        Objects.requireNonNull(user, "User is required");
+        if (transactionId <= 0) {
+            return Optional.empty();
+        }
+        return repository.findReceiptById(user.getId(), transactionId);
+    }
+
     private List<Long> notificationIds(User user, List<Transaction> notices) {
         List<Transaction> entries = List.copyOf(Objects.requireNonNull(notices, "Notices are required"));
         for (Transaction notice : entries) {

@@ -34,6 +34,10 @@ public interface TransactionRepository {
         throw new UnsupportedOperationException("Receipt lookup is not supported");
     }
 
+    default Optional<Transaction> findReceiptById(long userId, long transactionId) throws SQLException {
+        throw new UnsupportedOperationException("Receipt lookup is not supported");
+    }
+
     default Set<Long> findReadNotificationIds(long userId, List<Long> transactionIds) throws SQLException {
         throw new UnsupportedOperationException("Notification read state is not supported");
     }

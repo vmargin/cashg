@@ -55,7 +55,7 @@
                   <td><span class="direction-pill" th:classappend="${transaction.type.isIncoming()} ? ' direction-in' : ' direction-out'" th:text="${transaction.type.isIncoming() ? 'IN' : 'OUT'}">IN</span></td>
                   <td class="activity-amount" th:classappend="${transaction.type.isIncoming()} ? ' amount-in' : ' amount-out'"
                       th:text="${(transaction.type.isIncoming() ? '+ ' : '− ') + (transaction.currencyCode == 'PHP' ? '₱' : '$') + #numbers.formatDecimal(transaction.amount, 1, 'COMMA', 2, 'POINT')}">+ ₱30,000.00</td>
-                  <td><a class="table-link" th:if="${transaction.reference != null}" th:href="@{/transactions/receipt/{reference}(reference=${transaction.reference})}">View</a><span th:unless="${transaction.reference != null}" class="muted">—</span></td>
+                  <td><a class="table-link" th:if="${transaction.reference != null}" th:href="@{/transactions/receipt/entry/{id}(id=${transaction.id})}">View</a><span th:unless="${transaction.reference != null}" class="muted">—</span></td>
                 </tr>
               </tbody>
             </table>

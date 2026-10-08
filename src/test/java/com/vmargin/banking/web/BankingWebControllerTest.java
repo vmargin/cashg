@@ -117,6 +117,7 @@ class BankingWebControllerTest {
         when(historyService.getMonthlyInsights(any(), any())).thenReturn(
             MonthlyTransactionInsights.empty(YearMonth.now()));
         when(historyService.getReceipt(any(), anyString())).thenReturn(Optional.empty());
+        when(historyService.getReceiptById(any(), anyLong())).thenReturn(Optional.empty());
         when(savedRecipientService.list(any())).thenReturn(List.of());
         when(savingsGoalService.list(any())).thenReturn(List.of());
         when(accountService.list(any())).thenReturn(List.of(currentAccount));
@@ -155,13 +156,23 @@ class BankingWebControllerTest {
             .andExpect(status().isOk()).andReturn();
         String token = (String) dashboard.getModelAndView().getModel().get("cashInToken");
         String details = "Quarterly savings & <notes>";
-        when(cashInService.cashIn(eq(current), eq(1L), eq(new BigDecimal("65.40")), eq(details), eq(token)))
-            .thenThrow(new SQLException("private-database-diagnostic"));
-
         mvc.perform(post("/cash-in").session(session).with(user("1")).with(csrf())
             .param("token", token).param("amount", "65.40").param("details", details))
             .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("/cash-in"));
+            .andExpect(redirectedUrl("/cash-in/review"));
+
+        MvcResult review = mvc.perform(get("/cash-in/review").session(session).with(user("1")))
+            .andExpect(status().isOk()).andExpect(view().name("cash-in-review"))
+            .andExpect(content().string(org.hamcrest.Matchers.containsString("₱65.40")))
+            .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                "Quarterly savings &amp; &lt;notes&gt;"))).andReturn();
+        String operationToken = (String) review.getModelAndView().getModel().get("operationToken");
+        verify(cashInService, never()).cashIn(any(), anyLong(), any(), anyString(), anyString());
+        when(cashInService.cashIn(eq(current), eq(1L), eq(new BigDecimal("65.40")), eq(details),
+            eq(operationToken))).thenThrow(new SQLException("private-database-diagnostic"));
+        mvc.perform(post("/cash-in/confirm").session(session).with(user("1")).with(csrf())
+            .param("token", operationToken))
+            .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/cash-in"));
 
         MvcResult returned = mvc.perform(get("/cash-in").session(session).with(user("1")))
             .andExpect(status().isOk())
@@ -177,7 +188,53 @@ class BankingWebControllerTest {
         MvcResult nextRequest = mvc.perform(get("/cash-in").session(session).with(user("1")))
             .andExpect(status().isOk()).andReturn();
         assertFalse(nextRequest.getModelAndView().getModel().containsKey("cashInError"));
-        verify(cashInService).cashIn(eq(current), eq(1L), eq(new BigDecimal("65.40")), eq(details), eq(token));
+        verify(cashInService).cashIn(eq(current), eq(1L), eq(new BigDecimal("65.40")), eq(details),
+            eq(operationToken));
+    }
+
+    @Test
+    void cashInCancellationKeepsLedgerUnchangedAndReturnsTheReviewedValues() throws Exception {
+        String operationToken = openCashInReview("25.00", "Practice cash-in");
+
+        mvc.perform(post("/cash-in/cancel").session(session).with(user("1")).with(csrf())
+            .param("token", operationToken)).andExpect(redirectedUrl("/cash-in"));
+
+        assertNull(session.getAttribute(CashInController.PENDING_ATTRIBUTE));
+        verify(cashInService, never()).cashIn(any(), anyLong(), any(), anyString(), anyString());
+        mvc.perform(get("/cash-in").session(session).with(user("1")))
+            .andExpect(model().attribute("cashInAmount", "25.00"))
+            .andExpect(model().attribute("cashInDetails", "Practice cash-in"));
+    }
+
+    @Test
+    void anotherOwnerCannotConfirmOrCancelCashInReview() throws Exception {
+        String operationToken = openCashInReview("25.00", "Practice cash-in");
+        Object pending = session.getAttribute(CashInController.PENDING_ATTRIBUTE);
+        User another = new User(2, "09990000002", "REDACTED", "Other owner",
+            new BankAccount(2, 2, RECIPIENT_ACCOUNT_NUMBER, "Other owner", "Everyday account", "CHECKING",
+                "PHP", "ACTIVE", true, new BigDecimal("500.00")));
+        when(accounts.current(any())).thenReturn(another);
+
+        for (String action : List.of("confirm", "cancel")) {
+            mvc.perform(post("/cash-in/" + action).session(session).with(user("2")).with(csrf())
+                .param("token", operationToken)).andExpect(redirectedUrl("/cash-in"));
+            assertSame(pending, session.getAttribute(CashInController.PENDING_ATTRIBUTE));
+        }
+        verify(cashInService, never()).cashIn(any(), anyLong(), any(), anyString(), anyString());
+    }
+
+    @Test
+    void expiredCashInReviewIsRemovedAndCannotBeConfirmed() throws Exception {
+        session.setAttribute(CashInController.PENDING_ATTRIBUTE, new CashInController.PendingCashIn(
+            "expired-cash-in-review", current.getId(), current.getBankAccount().getId(),
+            current.getBankAccount().getAccountName(), new BigDecimal("12.00"), "Expired review", Instant.EPOCH));
+
+        mvc.perform(get("/cash-in/review").session(session).with(user("1")))
+            .andExpect(redirectedUrl("/cash-in"));
+        assertNull(session.getAttribute(CashInController.PENDING_ATTRIBUTE));
+        mvc.perform(post("/cash-in/confirm").session(session).with(user("1")).with(csrf())
+            .param("token", "expired-cash-in-review")).andExpect(redirectedUrl("/cash-in"));
+        verify(cashInService, never()).cashIn(any(), anyLong(), any(), anyString(), anyString());
     }
 
     @Test
@@ -333,7 +390,7 @@ class BankingWebControllerTest {
             .andExpect(content().string(org.hamcrest.Matchers.containsString("value=\"rent\"")))
             .andExpect(content().string(org.hamcrest.Matchers.containsString("− ₱30.00")))
             .andExpect(content().string(org.hamcrest.Matchers.containsString(
-                "/transactions/receipt/" + reference)));
+                "/transactions/receipt/entry/")));
 
         verify(historyService).getActivity(eq(current), eq(filter), eq(0), eq(10));
     }
@@ -364,6 +421,21 @@ class BankingWebControllerTest {
             .andExpect(content().string(org.hamcrest.Matchers.containsString(reference)))
             .andExpect(content().string(org.hamcrest.Matchers.not(
                 org.hamcrest.Matchers.containsString("name=\"userId\""))));
+    }
+
+    @Test
+    void transactionRowReceiptUsesTheOwnerCheckedLedgerId() throws Exception {
+        Transaction receipt = new Transaction(19, current.getId(), TransactionType.TRANSFER_SENT,
+            new BigDecimal("40.00"), "Transfer to own savings", LocalDateTime.of(2026, 9, 2, 10, 30),
+            UUID.randomUUID().toString());
+        when(historyService.getReceiptById(current, 19L)).thenReturn(Optional.of(receipt));
+
+        mvc.perform(get("/transactions/receipt/entry/19").session(session).with(user("1")))
+            .andExpect(status().isOk()).andExpect(view().name("receipt"))
+            .andExpect(content().string(org.hamcrest.Matchers.containsString("− ₱40.00")))
+            .andExpect(model().attribute("transaction", receipt));
+
+        verify(historyService).getReceiptById(current, 19L);
     }
 
     @Test
@@ -451,6 +523,10 @@ class BankingWebControllerTest {
             current.getBankAccount().getAccountName(), new BillPaymentService.PreparedPayment(
                 DemoBiller.WATER, "9012", new BigDecimal("20.00")),
             Instant.now().plusSeconds(300)));
+        session.setAttribute(CashInController.PENDING_ATTRIBUTE, new CashInController.PendingCashIn(
+            "old-cash-in-review", current.getId(), current.getBankAccount().getId(),
+            current.getBankAccount().getAccountName(), new BigDecimal("12.00"), "Prior review",
+            Instant.now().plusSeconds(300)));
         String oldId = session.getId();
         mvc.perform(post("/login").session(session).with(csrf())
             .param("mobile", "09990000001").param("pin", "1234"))
@@ -461,6 +537,7 @@ class BankingWebControllerTest {
             session.getAttribute(SessionAccounts.CREDENTIAL_FINGERPRINT));
         assertNull(session.getAttribute("authenticatedUser"));
         assertNull(session.getAttribute(BillPaymentController.PENDING_ATTRIBUTE));
+        assertNull(session.getAttribute(CashInController.PENDING_ATTRIBUTE));
         mvc.perform(get("/dashboard").session(session)).andExpect(status().isOk());
     }
 
@@ -516,7 +593,20 @@ class BankingWebControllerTest {
             mvc.perform(post("/cash-in").session(session).with(user("1")).with(csrf())
                 .param("token", token).param("amount", "50.00").param("details", "Demo funds"));
         }
-        verify(cashInService).cashIn(eq(current), eq(1L), eq(new BigDecimal("50.00")), eq("Demo funds"), eq(token));
+        verify(cashInService, never()).cashIn(any(), anyLong(), any(), anyString(), anyString());
+        MvcResult review = mvc.perform(get("/cash-in/review").session(session).with(user("1")))
+            .andExpect(status().isOk()).andReturn();
+        String operationToken = (String) review.getModelAndView().getModel().get("operationToken");
+        mvc.perform(post("/cash-in/confirm").session(session).with(user("1")).with(csrf())
+            .param("token", operationToken).param("amount", "900.00").param("details", "Tampered")
+            .param("accountId", "999"))
+            .andExpect(redirectedUrl("/transactions/receipt/" + operationToken));
+        mvc.perform(post("/cash-in/confirm").session(session).with(user("1")).with(csrf())
+            .param("token", operationToken)).andExpect(redirectedUrl("/cash-in"));
+        verify(cashInService).cashIn(eq(current), eq(1L), eq(new BigDecimal("50.00")), eq("Demo funds"),
+            eq(operationToken));
+        verify(cashInService, org.mockito.Mockito.times(1))
+            .cashIn(any(), anyLong(), any(), anyString(), anyString());
     }
 
     @Test
@@ -606,6 +696,18 @@ class BankingWebControllerTest {
             .param("recipient", RECIPIENT_ACCOUNT_NUMBER).param("amount", amount))
             .andExpect(redirectedUrl("/transfer/review"));
         MvcResult review = mvc.perform(get("/transfer/review").session(session).with(user("1")))
+            .andExpect(status().isOk()).andReturn();
+        return (String) review.getModelAndView().getModel().get("operationToken");
+    }
+
+    private String openCashInReview(String amount, String details) throws Exception {
+        MvcResult page = mvc.perform(get("/cash-in").session(session).with(user("1")))
+            .andExpect(status().isOk()).andReturn();
+        String formToken = (String) page.getModelAndView().getModel().get("cashInToken");
+        mvc.perform(post("/cash-in").session(session).with(user("1")).with(csrf())
+            .param("token", formToken).param("amount", amount).param("details", details))
+            .andExpect(redirectedUrl("/cash-in/review"));
+        MvcResult review = mvc.perform(get("/cash-in/review").session(session).with(user("1")))
             .andExpect(status().isOk()).andReturn();
         return (String) review.getModelAndView().getModel().get("operationToken");
     }

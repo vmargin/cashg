@@ -264,11 +264,29 @@ public class JdbcTransactionRepository implements TransactionRepository {
             return Optional.empty();
         }
         String sql = SELECT_TRANSACTION_COLUMNS
-            + " WHERE t.user_id = ? AND t.reference = ? ORDER BY t.occurred_at DESC, t.id DESC LIMIT 1";
+            + " WHERE t.user_id = ? AND t.reference = ?"
+            + " ORDER BY CASE WHEN t.type = 'TRANSFER_SENT' THEN 0 ELSE 1 END,"
+            + " t.occurred_at DESC, t.id DESC LIMIT 1";
         try (Connection connection = DatabaseConnection.open();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, userId);
             statement.setString(2, reference);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next() ? Optional.of(mapTransaction(result)) : Optional.empty();
+            }
+        }
+    }
+
+    @Override
+    public Optional<Transaction> findReceiptById(long userId, long transactionId) throws SQLException {
+        if (userId <= 0 || transactionId <= 0) {
+            return Optional.empty();
+        }
+        String sql = SELECT_TRANSACTION_COLUMNS + " WHERE t.user_id = ? AND t.id = ?";
+        try (Connection connection = DatabaseConnection.open();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, transactionId);
             try (ResultSet result = statement.executeQuery()) {
                 return result.next() ? Optional.of(mapTransaction(result)) : Optional.empty();
             }

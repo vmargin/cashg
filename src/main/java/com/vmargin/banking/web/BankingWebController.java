@@ -97,6 +97,7 @@ public class BankingWebController {
             SavingsController.PENDING_ATTRIBUTE,
             BillPaymentController.PENDING_ATTRIBUTE,
             MoneyRequestController.PENDING_PAYMENT,
+            CashInController.PENDING_ATTRIBUTE,
             CashInTokens.SESSION_ATTRIBUTE,
             "cashInError", "cashInAmount", "cashInDetails",
             "transferError", "transferRecipient", "transferAmount",

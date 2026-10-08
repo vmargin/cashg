@@ -42,7 +42,8 @@ public class JdbcCashInRepository implements CashInRepository {
         try {
             MoneyWrites.claim(connection, userId, reference, "CASH_IN");
             MoneyWrites.AccountState account = MoneyWrites.lockAccount(connection, accountId);
-            if (account.ownerId() != userId || !"PHP".equals(account.currencyCode())) {
+            if (account.ownerId() != userId || !"PHP".equals(account.currencyCode())
+                || !"ACTIVE".equals(account.status())) {
                 throw new IllegalArgumentException("Choose an eligible PHP account on this customer profile");
             }
             BigDecimal balance = account.balance().add(amount);

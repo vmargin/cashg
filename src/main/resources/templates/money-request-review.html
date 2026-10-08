@@ -31,7 +31,7 @@
           </form>
           <form method="post" th:action="@{/money-requests/pay/cancel}" class="review-cancel-form">
             <input type="hidden" name="token" th:value="${pendingPayment.token}">
-            <button class="activity-reset" type="submit">Cancel and return</button>
+            <button class="button button-quiet button-wide" type="submit">Cancel and return</button>
           </form>
           <p class="card-footnote">This records a Cash - G customer-to-customer demo transfer. No real bill, bank, or payment network is involved.</p>
         </section>

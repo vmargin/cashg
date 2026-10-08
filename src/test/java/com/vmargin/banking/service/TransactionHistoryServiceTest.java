@@ -52,9 +52,11 @@ class TransactionHistoryServiceTest {
 
         service.getStatement(testUser(), TransactionFilter.empty());
         service.getReceipt(testUser(), "reference-1");
+        service.getReceiptById(testUser(), 25L);
 
         assertEquals(1L, repository.requestedUserId);
         assertEquals(1L, repository.receiptOwnerId);
+        assertEquals(25L, repository.receiptTransactionId);
     }
 
     @Test
@@ -100,6 +102,7 @@ class TransactionHistoryServiceTest {
 
         private long requestedUserId;
         private long receiptOwnerId;
+        private long receiptTransactionId;
         private int requestedPage;
         private int requestedPageSize;
         private List<Long> notificationIds = List.of();
@@ -136,6 +139,13 @@ class TransactionHistoryServiceTest {
         @Override
         public Optional<Transaction> findReceipt(long userId, String reference) {
             receiptOwnerId = userId;
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Transaction> findReceiptById(long userId, long transactionId) {
+            receiptOwnerId = userId;
+            receiptTransactionId = transactionId;
             return Optional.empty();
         }
 
