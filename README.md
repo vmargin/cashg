@@ -1,4 +1,4 @@
-# Cash - G
+# cashg.onrender.com
 
 Cash - G is a Java banking simulator with a Spring Boot and Thymeleaf web interface, JDBC persistence, and a local synthetic-data demo. It is a portfolio project, not a bank or payment service.
 

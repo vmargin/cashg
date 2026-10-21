@@ -11,7 +11,7 @@
   <groupId>com.vmargin</groupId>
   <artifactId>banking-app</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <name>Cash-G</name>
+  <name>cashg.onrender.com</name>
   <description>Educational banking simulator: learner-authored Java domain first.</description>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
