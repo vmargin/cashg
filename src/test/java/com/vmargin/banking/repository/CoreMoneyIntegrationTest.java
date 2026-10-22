@@ -130,6 +130,10 @@ class CoreMoneyIntegrationTest {
         var ledger = new JdbcTransactionRepository();
         assertEquals(reference, ledger.findByUserId(alex.getId()).getFirst().getReference());
         assertEquals(reference, ledger.findByUserId(sam.getId()).getFirst().getReference());
+        assertEquals("Transfer to account ending " + sam.getBankAccount().getAccountNumber().substring(8),
+            ledger.findByUserId(alex.getId()).getFirst().getDetails());
+        assertEquals("Transfer from account ending " + alex.getBankAccount().getAccountNumber().substring(8),
+            ledger.findByUserId(sam.getId()).getFirst().getDetails());
         assertEquals(3, count("transactions"));
     }
 

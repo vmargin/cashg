@@ -1,0 +1,22 @@
+name: Sauron project integration
+on:
+  push:
+    paths: ['.gitignore', 'AGENTS.md', 'CLAUDE.md', 'GEMINI.md', '.*rules', '.agents/**', '.claude/**', '.codex/**', '.sauron/**', '.cursor/**', '.github/**', '.qwen/**', '.kimi/**', '.opencode/**', '.openclaude/**', '.codebuddy/**', '.zed/**', '.vscode/sauron.instructions.md', 'sauron.config.yaml', 'context/SAURON-WORKFLOW.md', 'scripts/sauron*', 'tools/sauron/**']
+  pull_request:
+    paths: ['.gitignore', 'AGENTS.md', 'CLAUDE.md', 'GEMINI.md', '.*rules', '.agents/**', '.claude/**', '.codex/**', '.sauron/**', '.cursor/**', '.github/**', '.qwen/**', '.kimi/**', '.opencode/**', '.openclaude/**', '.codebuddy/**', '.zed/**', '.vscode/sauron.instructions.md', 'sauron.config.yaml', 'context/SAURON-WORKFLOW.md', 'scripts/sauron*', 'tools/sauron/**']
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/sauron/package-lock.json
+      - run: npm ci --prefix tools/sauron --ignore-scripts --no-audit --no-fund
+      - run: node scripts/sauron-workflow.mjs check
+      - run: node scripts/sauron.mjs doctor
+      - run: node --test scripts/sauron-workflow.test.mjs scripts/sauron.test.mjs

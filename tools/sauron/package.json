@@ -1,0 +1,19 @@
+{
+  "name": "banking-app-sauron-tooling",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pinned Sauron development harness for the Java banking simulator",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "sauron": "node ../../scripts/sauron.mjs",
+    "check": "node ../../scripts/sauron.mjs doctor",
+    "test": "node --test ../../scripts/sauron-workflow.test.mjs ../../scripts/sauron.test.mjs"
+  },
+  "dependencies": {
+    "sauron-ai": "3.0.0",
+    "smol-toml": "1.9.1"
+  }
+}

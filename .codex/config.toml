@@ -1,0 +1,13 @@
+# Project-scoped Sauron Fellowship activation for Codex.
+# Inherit the user's model, provider, permissions and other global settings.
+[features]
+multi_agent_v2 = true
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
+
+# sauron:start (managed by Sauron; edit outside this block)
+# Sauron native adapter initialized. Project settings outside this block take precedence.
+# Instructions: AGENTS.md -> .codex/instructions.md. Native roles: .codex/agents/*.toml.
+# sauron:end

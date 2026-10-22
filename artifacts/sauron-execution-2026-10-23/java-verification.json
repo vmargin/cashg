@@ -1,0 +1,270 @@
+{
+  "command": "scripts/dev.ps1 -Task verify",
+  "result": "BUILD SUCCESS",
+  "tests": 174,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 6,
+  "checkstyleViolations": 0,
+  "suites": [
+    {
+      "name": "com.vmargin.banking.LoginFrameFormattingTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.model.BankAccountTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.model.SavingsGoalTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.model.TransactionFilterTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.model.TransactionTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.CoreMoneyConcurrencyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.CoreMoneyIntegrationTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.IsolatedPostgresTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcAdminRoleRepositoryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcDemoSeedRepositoryTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcSavedRecipientRepositoryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcSavingsGoalRepositoryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcTransactionActivityRepositoryTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcTransactionRepositoryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcTransferRepositoryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "name": "com.vmargin.banking.repository.JdbcUserRepositoryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "name": "com.vmargin.banking.repository.PostgresSchemaMigrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "name": "com.vmargin.banking.service.AdminServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.BillPaymentServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.CashInServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.LoginServiceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.RegistrationServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.SavedRecipientServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.StatementCsvExporterTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.TransactionHistoryServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.service.TransferServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.util.DatabaseConnectionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.util.JdbcSchemaMigratorTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.AccountInformationControllerTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.AccountSettingsControllerTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.BankingWebControllerTest",
+      "tests": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.BillPaymentControllerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.DemoConfigurationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.MoneyRequestControllerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.PinChangeSessionIntegrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.PostgresMaintenanceConfigurationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.vmargin.banking.web.SessionAccountsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

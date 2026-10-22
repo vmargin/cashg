@@ -75,3 +75,17 @@ I hand-coded desktop v1's Java interface, services, JDBC persistence, and tests.
 ---
 
 [More projects](https://github.com/vmargin) · [Portfolio](https://vmargin.github.io/) · [LinkedIn](https://www.linkedin.com/in/vmargin/)
+
+## Sauron development workflow
+
+See [Sauron workflow](context/SAURON-WORKFLOW.md) for automatic task guidance, Fellowship roles, frontend design routing, and integration checks. Run `node scripts/sauron-workflow.mjs check` with Node 22 or later.
+
+For the pinned Sauron development harness (Node 22 or later):
+
+```powershell
+npm ci --prefix tools/sauron --ignore-scripts --no-audit --no-fund
+node scripts/sauron.mjs doctor
+node scripts/sauron.mjs run "Implement the requested project change"
+```
+
+The last command performs Sauron skill lookup and opens Codex with the project workflow. It requires a signed-in Codex CLI. Fellowship roles load in the next Codex session. Use `node scripts/sauron.mjs init` when reinitializing the harness so project-specific Java instructions are preserved.

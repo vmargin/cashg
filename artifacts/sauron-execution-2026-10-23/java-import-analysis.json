@@ -1,0 +1,26 @@
+{
+  "method": "Java import declarations, not an AST graph",
+  "files": 88,
+  "packageEdges": {
+    "LoginFrame.java -> model": 3,
+    "LoginFrame.java -> service": 8,
+    "Main.java -> web": 1,
+    "Main.java -> repository": 4,
+    "Main.java -> service": 6,
+    "repository -> model": 44,
+    "repository -> util": 20,
+    "repository -> service": 6,
+    "service -> model": 29,
+    "service -> repository": 13,
+    "service -> service": 6,
+    "service -> util": 5,
+    "util -> Spring": 1,
+    "web -> model": 35,
+    "web -> service": 42,
+    "web -> Servlet": 16,
+    "web -> Spring": 111,
+    "web -> repository": 13,
+    "web -> util": 8
+  },
+  "serviceBoundaryViolations": []
+}

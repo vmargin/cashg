@@ -49,7 +49,7 @@ final class MoneyWrites {
 
     static AccountState lockAccount(Connection connection, long accountId) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("""
-            SELECT owner_id, balance, currency_code, status, is_primary
+            SELECT owner_id, balance, currency_code, status, is_primary, account_number
             FROM accounts WHERE id = ? FOR UPDATE
             """)) {
             statement.setLong(1, accountId);
@@ -59,7 +59,7 @@ final class MoneyWrites {
                 }
                 AccountState account = new AccountState(accountId, result.getLong("owner_id"),
                     result.getBigDecimal("balance"), result.getString("currency_code"),
-                    result.getString("status"), result.getBoolean("is_primary"));
+                    result.getString("status"), result.getBoolean("is_primary"), result.getString("account_number"));
                 if (!"ACTIVE".equals(account.status())) {
                     throw new IllegalArgumentException("This account is not available for money movements");
                 }
@@ -169,26 +169,13 @@ final class MoneyWrites {
         }
         balanceAccount(connection, source, nextSource);
         balanceAccount(connection, destination, nextDestination);
-        String sourceLastFour = accountNumber(connection, sourceAccountId).substring(8);
-        String destinationLastFour = accountNumber(connection, destinationAccountId).substring(8);
+        String sourceLastFour = source.accountNumber().substring(8);
+        String destinationLastFour = destination.accountNumber().substring(8);
         ledger(connection, source.ownerId(), sourceAccountId, TransactionType.TRANSFER_SENT,
             amount, sourceDetails.formatted(destinationLastFour), occurredAt, reference);
         ledger(connection, destination.ownerId(), destinationAccountId, TransactionType.TRANSFER_RECEIVED,
             amount, destinationDetails.formatted(sourceLastFour), occurredAt, reference);
         return nextSource;
-    }
-
-    private static String accountNumber(Connection connection, long accountId) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(
-            "SELECT account_number FROM accounts WHERE id = ?")) {
-            statement.setLong(1, accountId);
-            try (ResultSet result = statement.executeQuery()) {
-                if (!result.next()) {
-                    throw new IllegalArgumentException("Account is no longer available");
-                }
-                return result.getString(1);
-            }
-        }
     }
 
     static long primaryAccountId(Connection connection, long ownerId) throws SQLException {
@@ -205,6 +192,6 @@ final class MoneyWrites {
     }
 
     record AccountState(long id, long ownerId, BigDecimal balance, String currencyCode,
-                        String status, boolean primary) {
+                        String status, boolean primary, String accountNumber) {
     }
 }

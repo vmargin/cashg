@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "node scripts/sauron-workflow.mjs check",
+        "powershell": "node scripts/sauron-workflow.mjs check",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "project": "banking-app-v2",
+  "instructions": ".codex/instructions.md",
+  "workflow": "context/SAURON-WORKFLOW.md",
+  "cliObservedVersion": "3.0.0",
+  "nativeFiles": [
+    "tools/sauron/package.json", "tools/sauron/package-lock.json", "scripts/sauron.mjs",
+    "scripts/sauron.test.mjs", ".codex/config.toml", ".claude/skills/sauron/SKILL.md"
+  ],
+  "bridges": [
+    "AGENTS.md", "CLAUDE.md", "GEMINI.md", ".cursorrules", ".cursor/rules/sauron.mdc",
+    ".windsurfrules", ".clinerules", ".traerules", ".kirorules", ".hermesrules",
+    ".pirules", ".adalrules", ".github/copilot-instructions.md", ".qwen/system.md",
+    ".kimi/prompt.md", ".opencode/instructions.md", ".codebuddy/rules.md",
+    ".zed/prompts/sauron.md", ".vscode/sauron.instructions.md", ".openclaude/config.json"
+  ],
+  "agents": {
+    "gandalf": "Plan complex changes; identify acceptance criteria, dependencies and smallest coherent slices.",
+    "aragorn": "Trace architecture and schema boundaries; preserve service ports and atomic JDBC transactions.",
+    "frodo": "Implement the scoped change at its owning layer and integrate the result.",
+    "boromir": "Review owner authorization, CSRF, session identity, PIN handling and sensitive data boundaries.",
+    "merry": "Select and run focused tests; report passes, failures, skips and evidence limits.",
+    "pippin": "Probe replay, stale reviews, concurrency, rollback, malformed money and boundary cases.",
+    "legolas": "Inspect syntax, Checkstyle and small defects using project tools.",
+    "gimli": "Refactor within agreed ownership while preserving routes, contracts and legacy compilation.",
+    "samwise": "Inspect Git state and summarize changes; commit, push or publish only when authorized."
+  },
+  "routes": [
+    {
+      "id": "architecture",
+      "pattern": "architect|schema|migration|cross.layer|new feature|refactor|workflow|sauron|integrat",
+      "agents": ["aragorn", "gandalf"],
+      "skills": ["adapt-project", "engineering-loop", "engineering-loop/blueprint-session", "engineering-loop/code-inspection"]
+    },
+    {
+      "id": "backend",
+      "pattern": "\\b(?:java|spring|controllers?|services?|repositor(?:y|ies)|jdbc|backend|transfers?|balances?|ledger|savings|bills?|payments?|money|cash.in|requests?)\\b",
+      "agents": ["frodo", "merry"],
+      "skills": ["java-spring-principles", "backend-development", "testing-principles"]
+    },
+    {
+      "id": "database",
+      "pattern": "database|postgres|sql|jdbc|schema|migrat|transaction|deadlock|concurren",
+      "agents": ["aragorn", "pippin"],
+      "skills": ["database-principles", "database-migration"]
+    },
+    {
+      "id": "security",
+      "pattern": "\\b(?:secur\\w*|auth\\w*|login|pins?|csrf|sessions?|owner\\w*|permissions?|transfers?|payments?|money|cash.in|savings|bills?|requests?)\\b",
+      "agents": ["boromir"],
+      "skills": ["security-auditor", "auth-architecture", "frontend-security"]
+    },
+    {
+      "id": "frontend",
+      "pattern": "\\b(?:frontend|front.end|design|ui|ux|templates?|thymeleaf|css|layouts?|responsive|themes?|dashboard|accessib\\w*|keyboard|forms?|visual|motion|animations?|brand\\w*|images?|screenshots?|wireframes?|prototypes?)\\b",
+      "agents": ["aragorn", "merry"],
+      "skills": ["design-engineering", "html-css-principles", "accessibility-auditor"]
+    },
+    {
+      "id": "forms",
+      "pattern": "\\b(?:forms?|validation|inputs?|errors?|confirmations?)\\b|\\b(?:transfer|payment|money|savings|bill) review\\b",
+      "agents": ["merry"],
+      "skills": ["forms-validation", "error-handling"]
+    },
+    {
+      "id": "failure",
+      "pattern": "fail|broken|exception|flaky|triage|bug|regression",
+      "agents": ["legolas", "merry"],
+      "skills": ["engineering-loop/failure-triage", "testing-principles"]
+    },
+    {
+      "id": "checkpoint",
+      "pattern": "checkpoint|resume|handoff|long.running",
+      "agents": ["samwise"],
+      "skills": ["engineering-loop/context-checkpoint"]
+    }
+  ],
+  "designStages": [
+    {"stage": 1, "name": "Foundations", "skill": "design-engineering/01-foundations-and-systems/design-system-architecture-spec"},
+    {"stage": 2, "name": "Visual tuning", "skill": "design-engineering/02-aesthetic-engines-and-styles/utilitarian-minimalist-layout-engine"},
+    {"stage": 3, "name": "Identity", "skill": "brand"},
+    {"stage": 4, "name": "Motion and interaction", "skill": "design-engineering/04-motion-and-interaction/pull-request-motion-review-gate"},
+    {"stage": 5, "name": "Visual reference to code", "skill": "design-engineering/05-vision-and-code-generation/visual-comp-image-to-code-converter"},
+    {"stage": 6, "name": "Audit", "skill": "design-engineering/06-audit-refactor-and-enforcement/visual-redesign-diagnostic-auditor"}
+  ]
+}

@@ -1,0 +1,21 @@
+# Descriptive project metadata. Observed CLI: Sauron 3.0.0.
+# The project fields describe the app; init below selects native runtime adapters.
+# Project routing: .sauron/workflow.json and context/SAURON-WORKFLOW.md.
+# Active shared contract: AGENTS.md -> .codex/instructions.md.
+version: "1.0.0"
+
+project:
+  name: "banking-app-v2"
+  description: "Educational banking simulator with a Spring Boot web interface"
+  language: "multi" # Java is not offered by the bundled template's language list.
+  framework: "spring-boot-thymeleaf"
+
+caveman:
+  default_mode: "off"
+
+# Choices from `sauron init`; `sauron sync` reuses them.
+init:
+  runtimes: [codex, claude]
+  agents: fellowship
+  skills: none
+  commands: false

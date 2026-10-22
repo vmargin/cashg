@@ -1,0 +1,749 @@
+{
+  "phase": "before",
+  "startedAt": "2026-10-22T22:18:05.637Z",
+  "checks": [
+    {
+      "name": "saved-recipient selection reconciles visible validation feedback",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\n'true' !== null\n"
+    },
+    {
+      "name": "keyboard error summary and reduced motion remain usable",
+      "status": "PASS"
+    }
+  ],
+  "layouts": [
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "dark",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "dark",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "dark",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "dark",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "light",
+      "width": 320,
+      "content": 320,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "light",
+      "width": 390,
+      "content": 390,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "light",
+      "width": 1024,
+      "content": 1024,
+      "unlabeled": 0
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/accounts",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/transfer",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/request",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cash-in",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/payments",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/cards",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/savings",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/activity",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/insights",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/notifications",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    },
+    {
+      "route": "/help",
+      "theme": "light",
+      "width": 1440,
+      "content": 1440,
+      "unlabeled": 0
+    }
+  ],
+  "accessibility": [],
+  "consoleErrors": [],
+  "finishedAt": "2026-10-22T22:18:19.850Z",
+  "violations": 0
+}

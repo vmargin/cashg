@@ -1,7 +1,8 @@
 /target/
 /.idea/
 *.iml
-/.vscode/
+/.vscode/*
+!/.vscode/sauron.instructions.md
 /.local/
 .env
 .env.*
@@ -17,6 +18,12 @@
 /output/
 /tmp/
 /design/
+/.sauron/graph/
+/.sauron/traces/
+/.sauron/backups/
+/tools/sauron/node_modules/
+/tools/browser/node_modules/
+__pycache__/
 /BANKING-APP-GUIDE.md
 /SETUP-REPORT.md
 /START-TOMORROW.md

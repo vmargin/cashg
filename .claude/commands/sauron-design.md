@@ -1,0 +1,3 @@
+Handle $ARGUMENTS through the relevant stage of `.agents/skills/design-engineering/SKILL.md`, following `AGENTS.md`, `.codex/instructions.md` and `context/SAURON-WORKFLOW.md`.
+
+Read `PRODUCT.md`, `DESIGN.md` and the affected templates, CSS, scripts and tests. Preserve Cash - G identity, Thymeleaf contracts and server-owned financial behavior. For a full design pass, record all six stages in one scoped artifact, including stages needing no change. For a small visual fix, work directly with a focused check. Use rendered browser verification when available and report unavailable or unperformed checks accurately.

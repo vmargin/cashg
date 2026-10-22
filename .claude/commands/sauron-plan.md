@@ -1,0 +1,3 @@
+Plan $ARGUMENTS using `AGENTS.md`, `.codex/instructions.md` and the relevant engineering-loop stage in `context/SAURON-WORKFLOW.md`.
+
+Trace affected routes, services, repository interfaces, JDBC implementations, templates and tests. Define acceptance criteria, invariants, smallest coherent implementation slices and verification. Use the current project context rather than nonexistent upstream templates. Keep the plan in the response unless its size or a handoff merits `context/engineering-loop/<task>/`. A planning-only request stops at a concrete plan; an already authorized implementation request proceeds within that authorization.

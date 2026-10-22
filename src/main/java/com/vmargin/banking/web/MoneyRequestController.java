@@ -113,8 +113,10 @@ public class MoneyRequestController {
                 "ACTIVE".equals(account.getStatus()) && request.currencyCode().equals(account.getCurrencyCode()))
                 .orElseThrow(() -> new IllegalArgumentException("Choose an active account in the request currency."));
             LocalDateTime now = LocalDateTime.now();
-            session.setAttribute(PENDING_PAYMENT, new PendingMoneyRequestPayment(request.id(), source.getId(),
-                UUID.randomUUID().toString(), UUID.randomUUID().toString(), now.plusMinutes(REVIEW_MINUTES)));
+            synchronized (session) {
+                session.setAttribute(PENDING_PAYMENT, new PendingMoneyRequestPayment(request.id(), source.getId(),
+                    UUID.randomUUID().toString(), UUID.randomUUID().toString(), now.plusMinutes(REVIEW_MINUTES)));
+            }
             return "redirect:/money-requests/pay/review";
         } catch (IllegalArgumentException exception) {
             session.setAttribute(ERROR, exception.getMessage());
@@ -133,7 +135,7 @@ public class MoneyRequestController {
         }
         PendingMoneyRequestPayment pending = pendingPayment(session);
         if (pending == null || !pending.expiresAt().isAfter(LocalDateTime.now())) {
-            session.removeAttribute(PENDING_PAYMENT);
+            discardPayment(session, pending);
             session.setAttribute(ERROR, "This review expired. Start again from the incoming request.");
             return "redirect:/request";
         }
@@ -141,7 +143,7 @@ public class MoneyRequestController {
         BankAccount source = accounts.get(payer, pending.sourceAccountId()).orElse(null);
         if (request == null || source == null || !"ACTIVE".equals(source.getStatus())
             || !request.currencyCode().equals(source.getCurrencyCode())) {
-            session.removeAttribute(PENDING_PAYMENT);
+            discardPayment(session, pending);
             session.setAttribute(ERROR, "This request or source account changed. Review it again before paying.");
             return "redirect:/request";
         }
@@ -158,20 +160,24 @@ public class MoneyRequestController {
         if (payer == null) {
             return "redirect:/login";
         }
-        PendingMoneyRequestPayment pending = pendingPayment(session);
-        if (pending == null || !pending.token().equals(token)
-            || !pending.expiresAt().isAfter(LocalDateTime.now())) {
+        PendingMoneyRequestPayment pending;
+        synchronized (session) {
+            pending = pendingPayment(session);
+            if (pending == null || !pending.token().equals(token)) {
+                session.setAttribute(ERROR, "This payment review expired or was already used. Start again.");
+                return "redirect:/request";
+            }
             session.removeAttribute(PENDING_PAYMENT);
-            session.setAttribute(ERROR, "This payment review expired or was already used. Start again.");
-            return "redirect:/request";
+            if (!pending.expiresAt().isAfter(LocalDateTime.now())) {
+                session.setAttribute(ERROR, "This payment review expired or was already used. Start again.");
+                return "redirect:/request";
+            }
         }
         try {
             requests.pay(payer, pending.requestId(), pending.sourceAccountId(), pending.paymentReference());
-            session.removeAttribute(PENDING_PAYMENT);
             session.setAttribute(NOTICE, "Request paid in the local ledger. No bank or payment network was contacted.");
             return "redirect:/request";
         } catch (IllegalArgumentException exception) {
-            session.removeAttribute(PENDING_PAYMENT);
             session.setAttribute(ERROR, exception.getMessage());
         } catch (SQLException exception) {
             session.setAttribute(ERROR, "Payment could not be confirmed. Check activity before retrying.");
@@ -184,9 +190,11 @@ public class MoneyRequestController {
         if (sessions.current(session) == null) {
             return "redirect:/login";
         }
-        PendingMoneyRequestPayment pending = pendingPayment(session);
-        if (pending != null && pending.token().equals(token)) {
-            session.removeAttribute(PENDING_PAYMENT);
+        synchronized (session) {
+            PendingMoneyRequestPayment pending = pendingPayment(session);
+            if (pending != null && pending.token().equals(token)) {
+                session.removeAttribute(PENDING_PAYMENT);
+            }
         }
         session.setAttribute(NOTICE, "Payment review canceled. No money moved.");
         return "redirect:/request";
@@ -219,6 +227,14 @@ public class MoneyRequestController {
     private PendingMoneyRequestPayment pendingPayment(HttpSession session) {
         Object value = session.getAttribute(PENDING_PAYMENT);
         return value instanceof PendingMoneyRequestPayment pending ? pending : null;
+    }
+
+    private void discardPayment(HttpSession session, PendingMoneyRequestPayment pending) {
+        synchronized (session) {
+            if (pendingPayment(session) == pending) {
+                session.removeAttribute(PENDING_PAYMENT);
+            }
+        }
     }
 
     private void flash(HttpSession session, Model model) {

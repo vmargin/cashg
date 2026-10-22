@@ -3,7 +3,10 @@
   const recipientInput = document.getElementById("recipient");
   if (savedRecipient && recipientInput) {
     savedRecipient.addEventListener("change", () => {
-      if (savedRecipient.value) recipientInput.value = savedRecipient.value;
+      if (savedRecipient.value) {
+        recipientInput.value = savedRecipient.value;
+        recipientInput.dispatchEvent(new Event("input", { bubbles: true }));
+      }
     });
   }
 
