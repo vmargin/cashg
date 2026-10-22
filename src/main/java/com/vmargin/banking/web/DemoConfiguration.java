@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.boot.ApplicationRunner;
 
 @Configuration
-@Profile("demo")
+@Profile({"demo", "hosted-demo"})
 public class DemoConfiguration {
     @Bean
     public ApplicationRunner initializeDemo(@Value("${banking.demo.url}") String url) {

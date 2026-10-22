@@ -17,12 +17,21 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 class DemoConfigurationTest {
     @Test
     void demoStartupMigratesBeforeInsertOnlySyntheticSeedingAndRerunsSafely() throws Exception {
+        assertDemoProfileBootstraps("demo");
+    }
+
+    @Test
+    void hostedDemoStartupMigratesBeforeInsertOnlySyntheticSeedingAndRerunsSafely() throws Exception {
+        assertDemoProfileBootstraps("hosted-demo");
+    }
+
+    private void assertDemoProfileBootstraps(String profile) throws Exception {
         String url = "jdbc:h2:mem:demo_runner_" + UUID.randomUUID()
             + ";MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1";
         try {
             new ApplicationContextRunner()
                 .withUserConfiguration(DemoConfiguration.class)
-                .withPropertyValues("spring.profiles.active=demo", "banking.demo.url=" + url)
+                .withPropertyValues("spring.profiles.active=" + profile, "banking.demo.url=" + url)
                 .run(context -> {
                     try {
                         ApplicationRunner runner = context.getBean(ApplicationRunner.class);

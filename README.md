@@ -10,6 +10,8 @@ CASH-G Web is an educational Spring Boot and Thymeleaf application with JDBC per
 
 > **Live demo:** [cashg.onrender.com](https://cashg.onrender.com). The free Render instance may take 50 seconds or more to wake after inactivity. This application is a simulator, not a bank or payment service.
 
+The hosted demo uses an isolated, in-memory H2 database with synthetic sample accounts. Its practice activity resets when the Render service restarts or redeploys.
+
 ![CASH-G Web dashboard from the local synthetic-data demo](.github/media/screenshot.webp)
 
 ## Implemented workflows
