@@ -1,4 +1,15 @@
 (() => {
+  const demoLogin = document.querySelector("[data-demo-login]");
+  demoLogin?.addEventListener("click", () => {
+    const form = document.querySelector(".auth-card form[method='post']");
+    const mobile = form?.querySelector("#mobile");
+    const pin = form?.querySelector("#pin");
+    if (!form || !mobile || !pin) return;
+    mobile.value = "09990000001";
+    pin.value = "1234";
+    form.requestSubmit();
+  });
+
   const menus = [...document.querySelectorAll(".mobile-menu")];
   function closeMenu(menu, restoreFocus = false) {
     if (!menu.open) return;

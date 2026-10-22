@@ -2006,7 +2006,10 @@ button { cursor: pointer; }
 .auth-intro,
 .auth-legal { color: var(--reference-muted); font-size: var(--type-small); }
 .auth-form-side > .auth-legal { width: min(100%, 410px); margin: 15px auto 0; }
-.auth-demo-box { display: flex; gap: 10px; border: 1px solid var(--reference-line); border-radius: 9px; margin: 13px 0; padding: 10px; color: var(--reference-muted); background: var(--reference-soft-surface); font-size: var(--type-caption); }
+.auth-demo-box { display: flex; width: 100%; gap: 10px; border: 1px solid var(--reference-line); border-radius: 9px; margin: 13px 0; padding: 10px; color: var(--reference-muted); background: var(--reference-soft-surface); font: inherit; font-size: var(--type-caption); text-align: left; cursor: pointer; }
+.auth-demo-box:hover { border-color: var(--reference-accent); background: var(--reference-accent-soft); }
+.auth-demo-box:focus-visible { outline: 3px solid var(--reference-accent); outline-offset: 3px; }
+.auth-demo-copy { display: grid; gap: 3px; }
 .demo-box-icon { color: var(--reference-accent); }
 .auth-switch { margin-top: 15px; color: var(--reference-muted); font-size: var(--type-small); text-align: center; }
 .auth-switch a { color: var(--reference-accent); }

@@ -55,10 +55,11 @@
           <p class="field-hint" id="pin-hint">This PIN is only for your local practice profile.</p>
           <button class="button button-primary button-wide" type="submit">Continue <span aria-hidden="true">→</span></button>
         </form>
-        <div class="auth-demo-box">
+        <button class="auth-demo-box" type="button" data-demo-login
+                aria-label="Try the synthetic demo and open its sample account">
           <span class="demo-box-icon" aria-hidden="true">✦</span>
-          <div><strong>Try the demo</strong><p>Miguel Santos · 09990000001 · PIN 1234</p></div>
-        </div>
+          <span class="auth-demo-copy"><strong>Try the demo</strong><span>Miguel Santos · 09990000001 · PIN 1234</span></span>
+        </button>
         <p class="auth-switch">New to Cash - G? <a th:href="@{/register}">Create a practice account</a></p>
       </div>
       <p class="auth-legal">Never use a real banking PIN or real financial information here.</p>
