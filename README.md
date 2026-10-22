@@ -8,7 +8,7 @@ CASH-G Web is an educational Spring Boot and Thymeleaf application with JDBC per
 
 [Case study](https://vmargin.github.io/projects/cash-g/) · [Desktop v1](https://github.com/vmargin/banking-app)
 
-> **Demo status, October 22, 2026:** the previously published host, https://cashg.onrender.com, returns HTTP 404 at both the root and /login. Use the isolated local demo below. This application is a simulator, not a bank or payment service.
+> **Live demo:** [banking-app-v2.onrender.com](https://banking-app-v2.onrender.com). The free Render instance may take 50 seconds or more to wake after inactivity. This application is a simulator, not a bank or payment service.
 
 ![CASH-G Web dashboard from the local synthetic-data demo](.github/media/screenshot.webp)
 
