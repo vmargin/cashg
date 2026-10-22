@@ -1,54 +1,62 @@
-# cashg.onrender.com
+![CASH-G Web: an original THE MARGIN project cover](.github/media/cover.svg)
 
-Cash - G is a Java banking simulator with a Spring Boot and Thymeleaf web interface, JDBC persistence, and a local synthetic-data demo. It is a portfolio project, not a bank or payment service.
+# CASH-G Web
 
-Live web app: [cashg.onrender.com](https://cashg.onrender.com).
+**A Java banking simulator, from service rules to reviewed money flows.**
+
+CASH-G Web is an educational Spring Boot and Thymeleaf application with JDBC persistence. It is the web evolution of a [separate Java Swing desktop project](https://github.com/vmargin/banking-app), using synthetic accounts and practice money.
+
+[Case study](https://vmargin.github.io/projects/cash-g/) · [Desktop v1](https://github.com/vmargin/banking-app)
+
+> **Demo status, October 22, 2026:** the previously published host, https://cashg.onrender.com, returns HTTP 404 at both the root and /login. Use the isolated local demo below. This application is a simulator, not a bank or payment service.
+
+![CASH-G Web dashboard from the local synthetic-data demo](.github/media/screenshot.webp)
+
+## Implemented workflows
+
+- Multiple PHP accounts and a separate USD practice account; totals keep currencies separate.
+- Same-currency customer transfers with a server-held review and confirmation step.
+- Money requests that require the named payer's review before any ledger change.
+- Fictional bill payments, savings-goal funding and returns, receipts, statement CSV, and activity categories.
+- Owner-scoped account activity and notifications, PIN changes, help, and settings.
+- Display-only practice cards with local controls; no real card-network operation occurs.
+
+No external bank, biller, payment network, SMS, identity, or biometric provider is connected.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  Browser[Thymeleaf interface] --> Web[Spring web and session layer]
+  Web --> Services[Java services and money rules]
+  Services --> JDBC[JDBC repositories and bounded transactions]
+  JDBC --> Data[(H2 demo / PostgreSQL)]
+```
+
+Services own application rules. JDBC transactions keep balance changes, goal reserves, operation claims, and paired ledger entries consistent. Internal database IDs, customer-facing account numbers, and operation references serve different purposes. The demo uses a persistent local H2 file; PostgreSQL maintenance operations are explicit.
+
+**Stack:** Java 21, Spring Boot 3.5, Thymeleaf, Spring Security, JDBC, PostgreSQL, H2, JUnit, Maven.
 
 ## Run the local demo
 
-Install Temurin JDK 21, then start the isolated H2 demo:
+Install Temurin JDK 21. The repository includes the Maven Wrapper. On Windows PowerShell:
 
 ```powershell
+git clone https://github.com/vmargin/cashg.onrender.com.git
+cd cashg.onrender.com
 .\scripts\dev.ps1 -Task demo
 ```
 
-Open [http://127.0.0.1:8081/login](http://127.0.0.1:8081/login).
+Open http://127.0.0.1:8081/login. No database credentials are needed for this demo profile.
 
-The demo seeds these synthetic users:
-
-| Name | Mobile | PIN |
+| Synthetic user | Mobile | PIN |
 | --- | --- | --- |
 | Miguel Santos | `09990000001` | `1234` |
 | Maria Reyes | `09990000002` | `1234` |
 
-The demo keeps its existing local H2 data file so prior practice records remain available. Never enter real banking details or PINs.
+The demo preserves its local H2 data between runs. Enter synthetic data only, including PINs. For another operating system with JDK 21, use `./mvnw spring-boot:run -Dspring-boot.run.profiles=demo`.
 
-## What the demo supports
-
-- Multiple PHP accounts and a separate USD practice account, with unique 12-digit Cash - G account numbers.
-- Same-currency Cash - G customer-to-customer transfers with a server-held review and confirmation step.
-- Local money requests that require the named payer to review and confirm before a ledger change.
-- Fictional billers with review, masking, and local-only settlement records.
-- Savings goals funded from and returned to the practice account after review.
-- Display-only card records with local freeze, online-payment, and replacement-request controls.
-- Owner-scoped activity, account details, receipts, statement CSV, and monthly spending categories from persisted ledger data.
-- Local activity notifications with owner-scoped read state, a PIN change flow, help, and settings.
-
-No external bank, payment network, biller, card issuer, SMS, identity, or biometric provider is connected. Cards are display-only practice records. Cash - G sends no messages or security codes.
-
-## Data and money rules
-
-- The dashboard PHP total is the sum of PHP bank-account balances. USD stays separate. Savings-goal reserves are displayed in the goals area, not counted as bank accounts.
-- The supplied visual board shows PHP 124,850 while its PHP accounts show PHP 24,850 and PHP 80,000, which sum to PHP 104,850. Cash - G calculates account totals from its ledger and keeps currencies separate.
-- Account numbers are Cash - G simulator identifiers. Twelve digits is a local product choice, not a Philippine banking standard or routing code.
-- Internal database IDs are separate from customer-facing account numbers. A money-operation reference is a UUID and is not an account identifier.
-- Use only synthetic data. This project is not production banking software.
-
-## Architecture and checks
-
-The web layer maps requests and sessions to Java services. Services own product rules, JDBC repositories perform database work, and bounded JDBC transactions keep account balances, goal reserves, operation claims, and paired ledger entries consistent. The demo profile uses a local H2 file. PostgreSQL migrations and synthetic seeding are explicit maintenance operations.
-
-Run the project checks locally:
+## Verify
 
 ```powershell
 .\scripts\dev.ps1 -Task compile
@@ -56,11 +64,14 @@ Run the project checks locally:
 .\scripts\dev.ps1 -Task verify
 ```
 
-The PostgreSQL-backed tests require the isolated local database setup. H2 migration and money-flow tests run without PostgreSQL credentials. Run the demo without configuring database credentials.
+H2 migration and money-flow tests do not require PostgreSQL credentials. PostgreSQL-backed checks need a separately configured isolated local database. A green build is not evidence that the hosted demo is available.
 
-## Project references
+## Contribution and limits
 
-- [Product scope](PRODUCT.md)
-- [Design direction](DESIGN.md)
+I hand-coded desktop v1's Java interface, services, JDBC persistence, and tests. Web v2 is an AI-assisted adaptation, including redesign, development, and deployment. I review features, expected outputs, and behavior. Legacy Swing classes remain as earlier learning material; this repository launches the web application.
 
-The primary launch experience is the Spring Boot web application. Legacy Swing classes remain in the codebase as earlier Java learning material.
+[Product scope](PRODUCT.md) · [Design](DESIGN.md) · [Screenshot provenance](.github/media/README.md)
+
+---
+
+[More projects](https://github.com/vmargin) · [Portfolio](https://vmargin.github.io/) · [LinkedIn](https://www.linkedin.com/in/vmargin/)
