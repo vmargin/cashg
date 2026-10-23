@@ -1,5 +1,3 @@
-![CASH-G Web: an original THE MARGIN project cover](.github/media/cover.svg)
-
 # CASH-G Web
 
 **A Java banking simulator, from service rules to reviewed money flows.**
