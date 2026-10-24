@@ -30,7 +30,7 @@ Dark mode is the default and the persisted light theme remains a complete altern
 | Negative text / surface | `#FFAAA6` / `#3A2028` | `#A74344` / `#FDEEEE` |
 | Focus ring | `#9BC5FF` | `#155FC4` |
 
-Use semantic CSS custom properties for every shared surface, action, status, border, and focus state. Typography uses the existing system sans stack: 16px body and input text, 14px form labels and guidance, and a 12px minimum for compact metadata. Money uses tabular numerals. Keep section labels concise, headings distinct, and balance values easy to scan. Use blue edges and soft offset shadows to define depth without obscuring content. The stronger input-boundary token identifies editable controls; the quieter border token separates panels.
+Use semantic CSS custom properties for every shared surface, action, status, border, and focus state. Typography uses the existing system sans stack: 16px body and input text, and a 14px minimum for labels, guidance, and compact metadata. Money uses tabular numerals. Keep section labels concise, headings distinct, and balance values easy to scan. Use blue edges and soft offset shadows to define depth without obscuring content. The stronger input-boundary token identifies editable controls; the quieter border token separates panels.
 
 Use a shared spacing scale of 4, 8, 12, 16, 24, 32, and 40px. Leave about 24px between page sections, 16px between related content groups, and at least 8px between adjacent controls. Keep profile labels and values in a two-column definition list; keep phone and account numbers together with tabular numerals and allow them to fit narrow screens without breaking a digit sequence.
 
@@ -58,6 +58,11 @@ Use one control system in both themes: 44px minimum field height, 9px radius, co
 
 ## Audit evidence
 
+Seenry's existing-project workflow was applied on 24 October 2026 using the installed skills in the adjacent `elmira-dental-clinic` workspace. The shared `refinements.css` layer uses the existing palette, 14px metadata, 16px explanatory copy, and token-based spacing and interaction feedback. Dashboard sections use direct headings and the shared SVG icons; financial values and confirmation behavior remain server-owned.
+
+The six design stages resolve to the existing banking architecture and tokens, readable hierarchy and spacing, retained Cash - G identity, brief reduced-motion-aware interaction feedback, Thymeleaf implementation with persisted data, and rendered verification. No new imagery or brand direction was needed. Browser verification covers 104 layouts across both themes and four widths, 12 accessibility scans with zero violations, keyboard error recovery, reduced motion, transfer cancellation and replay, and stale money-request reviews. An independent screenshot review found no introduced visual issue.
+
+Seenry's new-stylesheet token lint and motion scan report zero findings. Its existing-project gate ran twice on an authenticated rendered dashboard snapshot, with 13 remaining rule groups on the final run: existing weight/radius variation, lines and theme/practice indicators, a dashboard incorrectly evaluated for a phone hero, a fixed mobile-navigation warning, and 14px app metadata evaluated against its desktop prose rule. The CLI critic is unavailable in this Windows installation, and the changed-file lint wrapper assumes `/bin/sh`; direct lint of the complete new stylesheet supplies the scoped lint result. These limitations do not constitute a Seenry certification or numeric score.
 
 ## Product truth
 

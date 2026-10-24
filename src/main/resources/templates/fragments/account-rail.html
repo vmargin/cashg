@@ -6,7 +6,7 @@
       <img src="/favicon.svg" width="34" height="34" alt="">
       <span>Cash - G</span>
     </a>
-    <p class="sidebar-caption">PERSONAL BANKING</p>
+    <p class="sidebar-caption">Personal banking</p>
     <nav th:fragment="mainLinks(activePage)" class="sidebar-nav" aria-label="Main navigation">
       <a th:href="@{/dashboard}" th:classappend="${activePage == 'dashboard'} ? ' is-active' : ''"
          th:aria-current="${activePage == 'dashboard' ? 'page' : null}">

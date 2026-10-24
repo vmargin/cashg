@@ -9,6 +9,7 @@
   <meta name="description" content="View your Cash - G demo accounts, recent activity, and monthly insights.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/refinements.css">
   <title>Dashboard | cashg.onrender.com</title>
 </head>
 <body class="app-body">
@@ -23,49 +24,49 @@
 
         <section class="dashboard-heading">
           <div>
-<p class="muted">Good to see you, <strong th:text="${user.displayName}">Miguel Santos</strong>.</p>
-            <h1>Your money, your next move.</h1>
+            <p class="muted">Good to see you, <strong th:text="${user.displayName}">Miguel Santos</strong>.</p>
+            <h1>Your account overview</h1>
           </div>
-          <a class="text-link" th:href="@{/activity}">View all activity <span aria-hidden="true">↗</span></a>
+          <a class="text-link" th:href="@{/activity}">View all activity <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
         </section>
 
         <section class="dashboard-grid" aria-label="Account overview">
           <article class="panel balance-panel">
             <div class="balance-topline">
               <div>
-                <p class="card-label">TOTAL ACROSS PHP ACCOUNTS</p>
+                <p class="card-label">Total across PHP accounts</p>
                 <p class="balance-figure"><span aria-hidden="true">₱</span><span th:text="${#numbers.formatDecimal(phpTotal, 1, 'COMMA', 2, 'POINT')}">104,850.00</span></p>
                 <p class="balance-caption">Balances stay in their original currency. USD is shown separately.</p>
               </div>
               <span class="balance-orbit" aria-hidden="true">₱</span>
             </div>
             <div class="balance-footer">
-              <span class="balance-note"><i aria-hidden="true"></i> Practice ledger · PHP</span>
+              <span class="balance-note">Practice ledger · PHP</span>
               <div class="balance-actions">
-                <a class="button button-primary" th:href="@{/transfer}"><span aria-hidden="true">↗</span> Send money</a>
-                <a class="button button-glass" th:href="@{/cash-in}"><span aria-hidden="true">＋</span> Add money</a>
-                <a class="icon-button balance-more" th:href="@{/accounts}" aria-label="Manage accounts">•••</a>
+                <a class="button button-primary" th:href="@{/transfer}"><svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg> Send money</a>
+                <a class="button button-glass" th:href="@{/cash-in}"><svg th:replace="~{fragments/icons :: icon('plus')}"></svg> Add money</a>
+                <a class="icon-button balance-more" th:href="@{/accounts}" aria-label="Manage accounts"><svg th:replace="~{fragments/icons :: icon('more')}"></svg></a>
               </div>
             </div>
           </article>
 
           <section class="panel quick-actions-panel" aria-labelledby="quick-actions-title">
             <div class="section-heading compact-heading">
-              <div><p class="eyebrow">MADE FOR YOUR EVERYDAY</p><h2 id="quick-actions-title">Quick actions</h2></div>
+              <div><h2 id="quick-actions-title">Quick actions</h2></div>
             </div>
             <div class="quick-actions-grid">
-              <a th:href="@{/transfer}" class="quick-action"><span class="quick-icon quick-blue" aria-hidden="true">⇄</span><span>Transfer</span></a>
-              <a th:href="@{/cash-in}" class="quick-action"><span class="quick-icon quick-green" aria-hidden="true">＋</span><span>Cash in</span></a>
-              <a th:href="@{/payments}" class="quick-action"><span class="quick-icon quick-violet" aria-hidden="true">▣</span><span>Pay bills</span></a>
-              <a th:href="@{/savings}" class="quick-action"><span class="quick-icon quick-amber" aria-hidden="true">◇</span><span>Save</span></a>
+              <a th:href="@{/transfer}" class="quick-action"><span class="quick-icon quick-blue" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('transfer')}"></svg></span><span>Transfer</span></a>
+              <a th:href="@{/cash-in}" class="quick-action"><span class="quick-icon quick-green" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('plus')}"></svg></span><span>Cash in</span></a>
+              <a th:href="@{/payments}" class="quick-action"><span class="quick-icon quick-violet" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('bills')}"></svg></span><span>Pay bills</span></a>
+              <a th:href="@{/savings}" class="quick-action"><span class="quick-icon quick-amber" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('savings')}"></svg></span><span>Save</span></a>
             </div>
-            <p class="simulator-note"><span aria-hidden="true">ⓘ</span> Actions update this local practice ledger only.</p>
+            <p class="simulator-note"><svg th:replace="~{fragments/icons :: icon('info')}"></svg> Actions update this local practice ledger only.</p>
           </section>
 
           <section class="panel accounts-panel" aria-labelledby="accounts-title">
             <div class="section-heading">
-              <div><p class="eyebrow">YOUR MONEY, ORGANIZED</p><h2 id="accounts-title">Accounts</h2></div>
-              <a class="text-link" th:href="@{/accounts}">Manage <span aria-hidden="true">↗</span></a>
+              <div><h2 id="accounts-title">Accounts</h2></div>
+              <a class="text-link" th:href="@{/accounts}">Manage <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
             </div>
             <div class="account-card-grid" th:if="${accountsAvailable and !#lists.isEmpty(bankAccounts)}">
               <a class="account-card" th:each="account, accountStat : ${bankAccounts}"
@@ -76,7 +77,7 @@
                     <span th:text="${account.currencyCode == 'USD' ? '$' : (account.accountType == 'SAVINGS' ? '◇' : '₱')}">₱</span>
                   </span>
                   <span class="account-type" th:text="${account.accountType == 'FOREIGN_CURRENCY' ? account.currencyCode + ' account' : (account.accountType == 'SAVINGS' ? 'Savings' : 'Everyday')}">Everyday</span>
-                  <span class="account-menu" aria-hidden="true">···</span>
+                  <span class="account-menu" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></span>
                 </div>
                 <strong class="account-balance">
                   <span th:text="${account.currencyCode == 'PHP' ? '₱' : '$'}">₱</span><span th:text="${#numbers.formatDecimal(account.balance, 1, 'COMMA', 2, 'POINT')}">24,850.00</span>
@@ -88,7 +89,7 @@
                 <span class="account-status" th:if="${account.status != 'ACTIVE'}" th:text="${account.status}">FROZEN</span>
               </a>
               <a class="account-card account-card-add" th:href="@{/accounts}">
-                <span class="add-account-mark" aria-hidden="true">＋</span><strong>Open account</strong><small>PHP savings or USD demo</small>
+                <span class="add-account-mark" aria-hidden="true"><svg th:replace="~{fragments/icons :: icon('plus')}"></svg></span><strong>Open account</strong><small>PHP savings or USD demo</small>
               </a>
             </div>
             <div class="empty-state" th:if="${!accountsAvailable}"><strong>Accounts are unavailable.</strong><p>Try again in a moment.</p></div>
@@ -97,13 +98,13 @@
 
           <section class="panel recent-panel" aria-labelledby="recent-title">
             <div class="section-heading">
-              <div><p class="eyebrow">THE LATEST</p><h2 id="recent-title">Recent activity</h2></div>
-              <a class="text-link" th:href="@{/activity}">See all <span aria-hidden="true">↗</span></a>
+              <div><h2 id="recent-title">Recent activity</h2></div>
+              <a class="text-link" th:href="@{/activity}">See all <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
             </div>
             <ul class="transaction-list" th:if="${activityAvailable and !#lists.isEmpty(transactions)}">
               <li class="transaction-row" th:each="transaction, transactionStat : ${transactions}" th:if="${transactionStat.index < 5}">
                 <span class="transaction-icon" th:classappend="${transaction.type.isIncoming()} ? ' transaction-in' : ' transaction-out'" aria-hidden="true">
-                  <span th:text="${transaction.type == T(com.vmargin.banking.model.TransactionType).CASH_IN or transaction.type == T(com.vmargin.banking.model.TransactionType).TRANSFER_RECEIVED ? '↙' : (transaction.type == T(com.vmargin.banking.model.TransactionType).CARD_PURCHASE ? '▰' : (transaction.type == T(com.vmargin.banking.model.TransactionType).BILL_PAYMENT ? '▣' : '↗'))}">↙</span>
+                  <svg th:replace="~{fragments/icons :: icon(${transaction.type.isIncoming() ? 'arrow-down-left' : (transaction.type.name() == 'CARD_PURCHASE' ? 'cards' : (transaction.type.name() == 'BILL_PAYMENT' ? 'bills' : 'arrow-up-right'))})}"></svg>
                 </span>
                 <span class="transaction-copy"><strong th:text="${transaction.details}">Salary deposit</strong><small><span th:text="${transaction.accountName}">Everyday account</span><span aria-hidden="true"> · </span><time th:datetime="${transaction.occurredAt}" th:text="${#temporals.format(transaction.occurredAt, 'MMM d, h:mm a')}">Today</time></small></span>
                 <strong class="transaction-amount" th:classappend="${transaction.type.isIncoming()} ? ' amount-in' : ' amount-out'"
@@ -116,8 +117,8 @@
 
           <section class="panel insight-panel" aria-labelledby="snapshot-title">
             <div class="section-heading">
-              <div><p class="eyebrow">YOUR MONTH, IN CONTEXT</p><h2 id="snapshot-title">Spending snapshot</h2></div>
-              <a class="icon-link" th:href="@{/insights}" aria-label="Open monthly insights">↗</a>
+              <div><h2 id="snapshot-title">Spending snapshot</h2></div>
+              <a class="icon-link" th:href="@{/insights}" aria-label="Open monthly insights"><svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
             </div>
             <div class="snapshot-total" th:if="${monthlyInsightsAvailable}">
               <div><span class="muted">PHP spending</span><strong th:text="${'₱' + #numbers.formatDecimal(monthlyInsights.moneyOutRecorded, 1, 'COMMA', 2, 'POINT')}">₱0.00</strong></div>
@@ -125,7 +126,6 @@
             </div>
             <ul class="snapshot-list" th:if="${monthlyInsightsAvailable}">
               <li th:each="total : ${monthlyInsights.categoryTotals}" th:if="${total.count > 0}">
-                <span class="snapshot-dot" th:classappend="${total.category.name() == 'FOOD_AND_DINING' ? ' dot-blue' : (total.category.name() == 'SHOPPING' ? ' dot-pink' : (total.category.name() == 'TRANSPORTATION' ? ' dot-violet' : (total.category.name() == 'BILLS_AND_UTILITIES' ? ' dot-lime' : (total.category.name() == 'ENTERTAINMENT' ? ' dot-cyan' : ''))))}" aria-hidden="true"></span>
                 <span class="snapshot-category" th:text="${total.category.displayName()}">Food &amp; dining</span>
                 <span class="snapshot-category-value">
                   <span class="snapshot-share" th:text="${monthlyInsights.spendingPercentage(total) + '%'}">25%</span>
@@ -144,8 +144,8 @@
 
           <section class="panel goal-preview-panel" aria-labelledby="goal-preview-title">
             <div class="section-heading">
-              <div><p class="eyebrow">A LITTLE CLOSER EVERY DAY</p><h2 id="goal-preview-title">Savings &amp; goals</h2></div>
-              <a class="icon-link" th:href="@{/savings}" aria-label="View savings goals">↗</a>
+              <div><h2 id="goal-preview-title">Savings &amp; goals</h2></div>
+              <a class="icon-link" th:href="@{/savings}" aria-label="View savings goals"><svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
             </div>
             <article class="goal-preview-card" th:each="goal, goalStat : ${savingsGoals}" th:if="${goalStat.index == 0}">
               <div class="goal-image" role="img" aria-label="Illustrated blue mountain landscape">
@@ -173,15 +173,15 @@
                 </div>
               </li>
             </ul>
-            <div class="empty-state" th:if="${savingsGoalsAvailable and #lists.isEmpty(savingsGoals)}"><strong>Start with a goal.</strong><p>Give your next milestone a name.</p><a class="text-link" th:href="@{/savings}">Create a goal ↗</a></div>
+            <div class="empty-state" th:if="${savingsGoalsAvailable and #lists.isEmpty(savingsGoals)}"><strong>Start with a goal.</strong><p>Give your next milestone a name.</p><a class="text-link" th:href="@{/savings}">Create a goal <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a></div>
             <div class="empty-state" role="status" th:unless="${savingsGoalsAvailable}"><strong>Goals are unavailable.</strong><p>Try again in a moment.</p></div>
-            <a class="goal-action" th:href="@{/savings}">View all goals <span aria-hidden="true">→</span></a>
+            <a class="goal-action" th:href="@{/savings}">View all goals <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
           </section>
 
           <section class="panel card-preview-panel" aria-labelledby="card-preview-title">
             <div class="section-heading">
-              <div><p class="eyebrow">YOUR DAILY COMPANION</p><h2 id="card-preview-title">Cards</h2></div>
-              <a class="icon-link" th:href="@{/cards}" aria-label="Manage your cards">↗</a>
+              <div><h2 id="card-preview-title">Cards</h2></div>
+              <a class="icon-link" th:href="@{/cards}" aria-label="Manage your cards"><svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a>
             </div>
             <article class="mini-card-visual" th:each="card, cardStat : ${cards}" th:if="${cardStat.index == 0}">
               <div class="mini-card-top"><span>Cash - G</span></div>
@@ -189,7 +189,7 @@
               <div class="mini-card-number" th:text="${'••••  ••••  ••••  ' + card.lastFour}">••••  ••••  ••••  4217</div>
               <div class="mini-card-bottom"><span th:text="${card.accountName}">Everyday account</span><span th:text="${card.isFrozen() ? 'FROZEN' : 'ACTIVE'}">ACTIVE</span></div>
             </article>
-            <div class="empty-state" th:if="${cardsAvailable and #lists.isEmpty(cards)}"><strong>No practice cards yet.</strong><p>Add a demo debit card from your PHP account.</p><a class="text-link" th:href="@{/cards}">Add a card ↗</a></div>
+            <div class="empty-state" th:if="${cardsAvailable and #lists.isEmpty(cards)}"><strong>No practice cards yet.</strong><p>Add a demo debit card from your PHP account.</p><a class="text-link" th:href="@{/cards}">Add a card <svg th:replace="~{fragments/icons :: icon('arrow-up-right')}"></svg></a></div>
             <div class="empty-state" role="status" th:unless="${cardsAvailable}"><strong>Cards are unavailable.</strong><p>Try again in a moment.</p></div>
             <p class="card-footnote">Practice controls only. No PAN, CVV, or real card is stored.</p>
           </section>
